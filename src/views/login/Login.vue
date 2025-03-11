@@ -1,22 +1,23 @@
 <template>
   <div class="login">
-    login
-
-
-
+    <h2>login</h2>
   </div>
 </template>
+
 <script setup lang="ts">
-import {ref,reactive} from "vue"
+import hyRequest from '@/service'
 
-
-
-
+hyRequest
+  .get({
+    url: '/home/multidata'
+  })
+  .then((res) => {
+    console.log(res)
+  })
 </script>
-<style lang="scss" scoped>
 
-
-
-
+<style lang="less" scoped>
+.login {
+  color: red;
+}
 </style>
-
