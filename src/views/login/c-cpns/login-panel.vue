@@ -11,7 +11,7 @@
             </div>
           </template>
 
-          <PaneAccount></PaneAccount>
+          <PaneAccount ref="accountRef"></PaneAccount>
         </el-tab-pane>
         <el-tab-pane name="phone">
           <template #label>
@@ -40,11 +40,14 @@ import PaneAccount from './pane-account.vue'
 import PanePhone from './pane-phone.vue'
 const isRememberPassword = ref(false)
 const activeName = ref('account')
+//获取loginaccount 组件的实例
+const accountRef = ref<InstanceType<typeof PaneAccount>>()
 const handleLogin = () => {
   if (activeName.value === 'phone') {
     console.log('phone')
   } else {
     console.log('user')
+    accountRef.value?.loginAction()
   }
 }
 </script>
