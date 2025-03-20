@@ -21,10 +21,11 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import type { FormRules, ElForm } from 'element-plus'
-
+import { accountLoginRequest } from '@/service/login/login'
 import { ElMessage } from 'element-plus'
-
-const account = reactive({
+import userLoginStore from '@/store/login/login'
+import type { IAccount } from '@/types/login'
+const account = reactive<IAccount>({
   name: '',
   password: '',
 })
@@ -49,17 +50,24 @@ const accountRules: FormRules = {
 }
 
 const formRef = ref<InstanceType<typeof ElForm>>()
+const loginStore = userLoginStore()
 const loginAction = () => {
   formRef.value?.validate((valid) => {
     if (valid) {
+      const name = account.name
+      const password = account.password
+      // accountLoginRequest({name,password}).then((res) =>{
+      //   console.log(res)
+      // })
+      loginStore.loginAccountAction({ name, password }).then(() => {})
       ElMessage({
         message: '登录成功',
         type: 'success',
       })
-      console.log('suc')
+      // console.log('suc')
     } else {
       ElMessage.error('请您输入正确的格式')
-      console.log('feat')
+      // console.log('feat')
     }
   })
 }
