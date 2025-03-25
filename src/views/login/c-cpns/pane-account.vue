@@ -25,9 +25,14 @@ import { accountLoginRequest } from '@/service/login/login'
 import { ElMessage } from 'element-plus'
 import userLoginStore from '@/store/login/login'
 import type { IAccount } from '@/types/login'
+import { localCache } from '@/utils/cache'
+const CACHE_NAME = 'name'
+const CACHE_PASSWORD = 'password'
+
+
 const account = reactive<IAccount>({
-  name: '',
-  password: '',
+  name: localCache.getCache(CACHE_NAME) ?? "",
+  password: localCache.getCache(CACHE_PASSWORD) ?? ""
 })
 
 const accountRules: FormRules = {
@@ -51,7 +56,7 @@ const accountRules: FormRules = {
 
 const formRef = ref<InstanceType<typeof ElForm>>()
 const loginStore = userLoginStore()
-const loginAction = () => {
+const loginAction = (isRememberPassword:boolean) => {
   formRef.value?.validate((valid) => {
     if (valid) {
       const name = account.name
@@ -59,7 +64,17 @@ const loginAction = () => {
       // accountLoginRequest({name,password}).then((res) =>{
       //   console.log(res)
       // })
-      loginStore.loginAccountAction({ name, password }).then(() => {})
+      loginStore.loginAccountAction({ name, password }).then(() => {
+        if(isRememberPassword){
+          localCache.setCache(CACHE_NAME,name)
+          localCache.setCache(CACHE_PASSWORD,password)
+        }else{
+          localCache.removeCache(CACHE_NAME)
+          localCache.removeCache(CACHE_PASSWORD)
+        }
+      })
+
+
       ElMessage({
         message: '登录成功',
         type: 'success',

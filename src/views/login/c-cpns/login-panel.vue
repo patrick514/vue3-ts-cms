@@ -35,19 +35,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import PaneAccount from './pane-account.vue'
 import PanePhone from './pane-phone.vue'
-const isRememberPassword = ref(false)
+import { localCache } from '@/utils/cache'
+const isRememberPassword = ref<boolean>(localCache.getCache('isRememberPassword') ?? false)
+watch(isRememberPassword,(newValue)=>{
+  localCache.setCache('isRememberPassword',newValue)
+})
 const activeName = ref('account')
 //获取loginaccount 组件的实例
 const accountRef = ref<InstanceType<typeof PaneAccount>>()
 const handleLogin = () => {
   if (activeName.value === 'phone') {
-    console.log('phone')
+
   } else {
-    console.log('user')
-    accountRef.value?.loginAction()
+
+    accountRef.value?.loginAction(isRememberPassword.value)
   }
 }
 </script>
