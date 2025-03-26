@@ -54,6 +54,9 @@ const loginStore = userLoginStore()
 const userName = loginStore.userInfo.name
 const handleExitClick = () => {
   localCache.removeCache(LOGIN_TOKEN)
+  localCache.removeCache('userInfo')
+  localCache.removeCache('userMenus')
+
   router.push('/login')
 }
 </script>

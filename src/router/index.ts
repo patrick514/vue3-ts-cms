@@ -1,6 +1,8 @@
 import { LOGIN_TOKEN } from '@/global/constants'
 import { localCache } from '@/utils/cache'
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { firstMenu } from '@/utils/map-menus'
+import { fi } from 'element-plus/es/locales.mjs'
+import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-router'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -12,25 +14,8 @@ const router = createRouter({
     { path: '/login', component: () => import('../views/login/Login.vue') },
     {
       path: '/main',
+      name: 'main',
       component: () => import('../views/main/main.vue'),
-      children: [
-        {
-          path: '/main/analysis/overview',
-          component: () => import('../views/main/analysis/overview/overview.vue'),
-        },
-        {
-          path: '/main/analysis/dashboard',
-          component: () => import('../views/main/analysis/dashboard/dashboard.vue'),
-        },
-        {
-          path: '/main/analysis/user',
-          component: () => import('../views/main/system/user/user.vue'),
-        },
-        {
-          path: '/main/analysis/role',
-          component: () => import('../views/main/system/role/role.vue'),
-        },
-      ],
     },
     {
       path: '/:pathMatch(.*)',
@@ -38,11 +23,21 @@ const router = createRouter({
     },
   ],
 })
+
+
+// router.addRoute('main',localRouter[0])
+// router.addRoute('main', localRouter[1])
+
 //导航守卫
-router.beforeEach((to, from) => {
+router.beforeEach((to) => {
   const token = localCache.getCache(LOGIN_TOKEN)
-  if (to.path === '/main' && !token) {
+  if (to.path.startsWith('/main') && !token) {
     return '/login'
+  }
+
+  // 如果是进入到main 路由拦截
+  if (to.path === '/main') {
+    return firstMenu.url
   }
 })
 export default router

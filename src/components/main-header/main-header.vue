@@ -6,7 +6,7 @@
       </el-icon>
     </div>
     <div class="content">
-      <div class="breadcrumb">面包屑</div>
+      <HeaderCrumb></HeaderCrumb>
       <headerInfo />
     </div>
   </div>
@@ -14,6 +14,7 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import headerInfo from './c-cpns/header-info.vue'
+import HeaderCrumb from './c-cpns/header-crumb.vue'
 //自定义事件
 const emit = defineEmits(['foldChange'])
 
@@ -21,7 +22,7 @@ const isFold = ref(false)
 const handleMenuIconClick = () => {
   isFold.value = !isFold.value
 
-  emit('foldChange',isFold.value)
+  emit('foldChange', isFold.value)
 }
 </script>
 <style lang="less" scoped>
