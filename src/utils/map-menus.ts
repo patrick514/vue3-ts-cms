@@ -28,7 +28,6 @@ export function mapMenusToRoutes(userMenus: any[]) {
       if (!firstMenu && route) firstMenu = submenu
     }
   }
-  console.log(firstMenu)
   // console.log(routes)
   return routes
 }
