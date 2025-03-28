@@ -6,6 +6,7 @@ import router from '@/router'
 import { LOGIN_TOKEN } from '@/global/constants'
 import type { RouteRecordRaw } from 'vue-router'
 import { mapMenusToRoutes } from '@/utils/map-menus'
+import userMainStore from '../main/main'
 interface ILoginState {
   token: string
   userInfo: any
@@ -36,6 +37,9 @@ const userLoginStore = defineStore('login', {
       localCache.setCache('userInfo', userInfo)
       localCache.setCache('userMenus', userMenus)
 
+      const mainStore = userMainStore()
+      mainStore.fetchEntireDataAction()
+
       //把路由加到数组中
       const routes = mapMenusToRoutes(userMenus)
       routes.forEach((route) => router.addRoute('main', route))
@@ -51,6 +55,9 @@ const userLoginStore = defineStore('login', {
         this.token = token
         this.userInfo = userInfo
         this.userMenus = userMenus
+
+        const mainStore = userMainStore()
+        mainStore.fetchEntireDataAction()
 
         // 2.动态添加路由
         const routes = mapMenusToRoutes(userMenus)

@@ -2,7 +2,7 @@
   <div class="content">
     <div class="header">
       <h3 class="title">用户列表</h3>
-      <el-button type="primary">新建用户</el-button>
+      <el-button type="primary" @click="hanleNewUserClick">新建用户</el-button>
     </div>
     <div class="table">
       <el-table :data="usersList" border style="width: 100%">
@@ -40,7 +40,7 @@
         </el-table-column>
         <el-table-column align="center" label="操作" width="180px">
           <template #default="scope">
-            <el-button icon="Edit" text type="primary">编辑</el-button>
+            <el-button icon="Edit" text type="primary" @click="handleEditBtnClick(scope.row)">编辑</el-button>
             <el-button icon="Delete" text type="danger" @click="handleDeleteBtnClick(scope.row.id)"
               >删除</el-button
             >
@@ -62,10 +62,12 @@
   </div>
 </template>
 <script setup lang="ts">
-import userSystemStore from '@/store/main/system'
+import userSystemStore from '@/store/main/system/system'
 import { formatUTC } from '@/utils/format'
 import { storeToRefs } from 'pinia'
 import { ref, reactive } from 'vue'
+
+const emit = defineEmits(['newClick','editClick'])
 
 const systemStore = userSystemStore()
 
@@ -96,6 +98,14 @@ const handleDeleteBtnClick = (id: number) => {
   systemStore.deleteUserByIdAction(id)
   // fetchUserListData()
   // console.log(id)
+}
+
+const handleEditBtnClick = (rowData:number)=>{
+  emit('editClick',rowData)
+
+}
+const hanleNewUserClick = () => {
+  emit('newClick')
 }
 
 fetchUserListData()

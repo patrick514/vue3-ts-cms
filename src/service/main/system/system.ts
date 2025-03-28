@@ -13,3 +13,18 @@ export function deleteUserById(id:number){
     url: `/users/${id}`
   })
 }
+
+export function newUserData(userInfo: any) {
+  return hyRequest.post({
+    url: '/users',
+    data: userInfo,
+  })
+}
+
+export function editUserData(userInfo: any,id:number) {
+  return hyRequest.patch({
+    url: `/users/${id}`,
+    data: userInfo,
+  })
+}
+
