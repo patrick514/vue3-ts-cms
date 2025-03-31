@@ -1,7 +1,7 @@
 <template>
   <div class="role">
     <pageSearch
-      :searchConfig="searchConfig"
+      :search-config="searchConfig"
       @query-click="handleQueryClick"
       @reset-click="handleResetClick"
     ></pageSearch>
@@ -30,7 +30,7 @@ import { storeToRefs } from 'pinia'
 
 const { contentRef, handleQueryClick, handleResetClick } = usePageContent()
 const { modalRef, handleNewBtnClick, handleEditBtnClick } = usePageModal()
-
+console.log(searchConfig)
 // 获取完整的菜单
 // const mainStore = userMainStore()
 // const { entireMenus } = storeToRefs(mainStore)

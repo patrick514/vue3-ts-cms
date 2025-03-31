@@ -54,10 +54,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import { usePageModal } from '@/hooks/usePageModal'
+
 import userMainStore from '@/store/main/main'
 import userSystemStore from '@/store/main/system/system'
-import { ElMessage } from 'element-plus'
 import { storeToRefs } from 'pinia'
 import { ref, reactive } from 'vue'
 interface IModalProps {

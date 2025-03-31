@@ -4,7 +4,7 @@
     <el-form
       :model="searchForm"
       ref="formRef"
-      :label-width="searchConfig.labelWidth ?? '80px'"
+      :label-width=" '80px'"
       size="large"
     >
       <el-row :gutter="20">
@@ -51,7 +51,6 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import type { ElForm } from 'element-plus'
-import searchConfig from '../../views/main/system/department/config/search.config'
 
 // 定义自定义事件/接收的属性
 interface IProps {
@@ -70,7 +69,7 @@ for (const item of props.searchConfig.formItems) {
 }
 const searchForm = reactive(initialForm)
 console.log(searchForm)
-console.log(props.searchConfig)
+console.log(props.searchConfig.formItems)
 // 重置操作
 const formRef = ref<InstanceType<typeof ElForm>>()
 function handleResetClick() {
@@ -84,6 +83,7 @@ function handleResetClick() {
 
 function handleQueryClick() {
   emit('queryClick', searchForm)
+  console.log(searchForm)
 }
 </script>
 

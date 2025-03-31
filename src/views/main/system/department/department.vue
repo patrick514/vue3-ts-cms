@@ -27,9 +27,11 @@ import pageSearch from '@/components/page-search/page-search.vue'
 import pageContent from '@/components/page-content/page-content.vue'
 import { computed, ref } from 'vue'
 import pageModal from '@/components/page-modal/page-modal.vue'
+
 import searchConfig from './config/search.config'
 import contentConfig from './config/content.config'
 import modalConfig from './config/modal.config'
+
 import userMainStore from '@/store/main/main'
 import { usePageContent } from '@/hooks/usePageContent'
 import { usePageModal } from '@/hooks/usePageModal'
