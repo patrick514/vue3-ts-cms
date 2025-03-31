@@ -25,7 +25,6 @@ const handleNewBtnClick = () =>{
 }
 const handleEditBtnClick = (rowData:any) =>{
   modalRef.value?.setModalVisible(false,rowData)
-  console.log(rowData)
 }
 </script>
 <style lang="less" scoped>
