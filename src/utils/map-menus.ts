@@ -62,3 +62,48 @@ export function mapPathToBreadCrumbs(path: string, userMenus: any[]) {
 
   return breadcrumbs
 }
+
+
+/**
+ * 菜单映射到id的列表
+ * @param menuList
+ */
+export function mapMenuListToIds(menuList: any[]) {
+  const ids: number[] = []
+
+  function recurseGetId(menus: any[]) {
+    for (const item of menus) {
+      if (item.children) {
+        recurseGetId(item.children)
+      } else {
+        ids.push(item.id)
+      }
+    }
+  }
+  recurseGetId(menuList)
+
+  return ids
+}
+
+
+/**
+ * 从菜单映射到按钮的权限 按钮是第三级
+ * @param menuList 菜单的列表
+ * @returns 权限的数组(字符串数组)
+ */
+export function mapMenusToPermissions(menuList: any[]) {
+  const permissions: string[] = []
+
+  function recurseGetPermission(menus: any[]) {
+    for (const item of menus) {
+      if (item.type === 3) {
+        permissions.push(item.permission)
+      } else {
+        recurseGetPermission(item.children ?? [])
+      }
+    }
+  }
+  recurseGetPermission(menuList)
+
+  return permissions
+}

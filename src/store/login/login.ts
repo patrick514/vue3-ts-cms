@@ -5,18 +5,20 @@ import { localCache } from '@/utils/cache'
 import router from '@/router'
 import { LOGIN_TOKEN } from '@/global/constants'
 import type { RouteRecordRaw } from 'vue-router'
-import { mapMenusToRoutes } from '@/utils/map-menus'
+import { mapMenusToPermissions, mapMenusToRoutes } from '@/utils/map-menus'
 import userMainStore from '../main/main'
 interface ILoginState {
   token: string
   userInfo: any
   userMenus: any
+  permissions: string[]
 }
 const userLoginStore = defineStore('login', {
   state: (): ILoginState => ({
     token: '',
     userInfo: {},
-    userMenus:  {},
+    userMenus: {},
+    permissions: [],
   }),
   actions: {
     async loginAccountAction(account: IAccount) {
@@ -40,6 +42,9 @@ const userLoginStore = defineStore('login', {
       const mainStore = userMainStore()
       mainStore.fetchEntireDataAction()
 
+      const permissions = mapMenusToPermissions(userMenus)
+      this.permissions = permissions
+
       //把路由加到数组中
       const routes = mapMenusToRoutes(userMenus)
       routes.forEach((route) => router.addRoute('main', route))
@@ -58,6 +63,9 @@ const userLoginStore = defineStore('login', {
 
         const mainStore = userMainStore()
         mainStore.fetchEntireDataAction()
+
+        const permissions = mapMenusToPermissions(userMenus)
+        this.permissions = permissions
 
         // 2.动态添加路由
         const routes = mapMenusToRoutes(userMenus)

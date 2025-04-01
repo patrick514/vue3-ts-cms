@@ -9,13 +9,9 @@
       <div class="form">
         <el-form :model="formData" label-width="80px" size="large">
           <template v-for="item in modalConfig.formItems" :key="item.prop">
-
             <el-form-item :label="item.label" :prop="item.prop">
               <template v-if="item.type === 'input'">
-                <el-input
-                  v-model="formData[item.prop]"
-                  :placeholder="item.placeholder"
-                />
+                <el-input v-model="formData[item.prop]" :placeholder="item.placeholder" />
               </template>
               <template v-if="item.type === 'date-picker'">
                 <el-date-picker
@@ -37,24 +33,23 @@
                   </template>
                 </el-select>
               </template>
+              <template v-if="item.type === 'custom'">
+                <slot :name="item.slotName"></slot>
+              </template>
             </el-form-item>
-
-        </template>
+          </template>
         </el-form>
       </div>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="handleConfirmClick">
-            确定
-          </el-button>
+          <el-button type="primary" @click="handleConfirmClick"> 确定 </el-button>
         </span>
       </template>
     </el-dialog>
   </div>
 </template>
 <script setup lang="ts">
-
 import userMainStore from '@/store/main/main'
 import userSystemStore from '@/store/main/system/system'
 import { storeToRefs } from 'pinia'
@@ -70,8 +65,6 @@ interface IModalProps {
   }
   otherInfo?: any
 }
-
-
 
 // 0.定义props
 const props = defineProps<IModalProps>()
@@ -106,10 +99,16 @@ const setModalVisible = (isNew: boolean, rowData?: any) => {
 const systemStore = userSystemStore()
 const handleConfirmClick = () => {
   dialogVisible.value = false
+
+  let infoData = formData
+  if (props.otherInfo) {
+    infoData = { ...infoData, ...props.otherInfo }
+  }
+
   if (!isNewRef.value && editData.value) {
-    systemStore.editPageDataAction(props.modalConfig.pageName,formData, editData.value.id)
+    systemStore.editPageDataAction(props.modalConfig.pageName, infoData, editData.value.id)
   } else {
-    systemStore.newPageDataAction(props.modalConfig.pageName,formData)
+    systemStore.newPageDataAction(props.modalConfig.pageName, infoData)
   }
 }
 

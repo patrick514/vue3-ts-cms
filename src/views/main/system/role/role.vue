@@ -12,7 +12,19 @@
       @edit-click="handleEditBtnClick"
     >
     </pageContent>
-    <pageModal :modal-config="modalConfig" ref="modalRef"></pageModal>
+    <pageModal :modal-config="modalConfig" ref="modalRef" :other-info="otherInfo">
+      <template #menulist>
+        <el-tree
+          ref="treeRef"
+          :data="entireMenus"
+          show-checkbox
+          node-key="id"
+          highlight-current
+          :props="{ children: 'children', label: 'name' }"
+          @check="handleElTreeCheck"
+        />
+      </template>
+    </pageModal>
   </div>
 </template>
 <script setup lang="ts">
@@ -27,26 +39,31 @@ import contentConfig from './config/content.config'
 import modalConfig from './config/modal.config'
 import userMainStore from '@/store/main/main'
 import { storeToRefs } from 'pinia'
+import { mapMenuListToIds } from '@/utils/map-menus'
+import { ElTree } from 'element-plus'
 
 const { contentRef, handleQueryClick, handleResetClick } = usePageContent()
-const { modalRef, handleNewBtnClick, handleEditBtnClick } = usePageModal()
-console.log(searchConfig)
-// 获取完整的菜单
-// const mainStore = userMainStore()
-// const { entireMenus } = storeToRefs(mainStore)
-// const otherInfo = ref({})
-// function handleElTreeCheck(data1: any, data2: any) {
-//   const menuList = [...data2.checkedKeys, ...data2.halfCheckedKeys]
-//   console.log(data2.checkedKeys)
-//   otherInfo.value = { menuList }
-// }
+const { modalRef, handleNewBtnClick, handleEditBtnClick } = usePageModal(editCallback)
 
-// const treeRef = ref<InstanceType<typeof ElTree>>()
-// function editCallback(itemData: any) {
-//   nextTick(() => {
-//     const menuIds = mapMenuListToIds(itemData.menuList)
-//     treeRef.value?.setCheckedKeys(menuIds)
-//   })
-// }
+
+const mainStore = userMainStore()
+const { entireMenus } = storeToRefs(mainStore)
+// 获取完整的菜单
+
+const otherInfo = ref({})
+function handleElTreeCheck(data1: any, data2: any) {
+  const menuList = [...data2.checkedKeys, ...data2.halfCheckedKeys]
+
+  otherInfo.value = { menuList }
+}
+
+const treeRef = ref<InstanceType<typeof ElTree>>()
+function editCallback(itemData: any) {
+  nextTick(() => {
+    const menuIds = mapMenuListToIds(itemData.menuList)
+
+    treeRef.value?.setCheckedKeys(menuIds)
+  })
+}
 </script>
 <style lang="less" scoped></style>
