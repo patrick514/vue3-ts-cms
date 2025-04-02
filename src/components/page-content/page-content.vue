@@ -1,21 +1,23 @@
 <template>
   <div class="content">
     <div class="header">
-      <h3 class="title">{{ contentConfig.header?.title ?? '数据列表' }}</h3>
-      <el-button type="primary" @click="hanleNewPageClick">{{
-        contentConfig.header?.btnTitle ?? '新建数据'
-      }}</el-button>
+      <h3 class="title">{{ contentConfig?.header?.title ?? '数据列表' }}</h3>
+      <el-button v-if="isCreate" type="primary" @click="handleNewPageClick">
+        {{ contentConfig?.header?.btnTitle ?? '新建数据' }}
+      </el-button>
     </div>
     <div class="table">
-      <el-table :data="pageList" border style="width: 100%" v-bind="contentConfig.childrenTree">
+      <el-table
+        :data="pageList"
+        border
+        style="width: 100%"
+        v-bind="contentConfig.childrenTree"
+      >
         <template v-for="item in contentConfig.propsList" :key="item.prop">
           <template v-if="item.type === 'timer'">
             <el-table-column align="center" v-bind="item">
               <template #default="scope">
-                <div style="display: flex; align-items: center; justify-content: center">
-                  <el-icon><timer /></el-icon>
-                  <span style="margin-left: 10px">{{ formatUTC(scope.row[item.prop]) }}</span>
-                </div>
+                {{ formatUTC(scope.row[item.prop]) }}
               </template>
             </el-table-column>
           </template>
@@ -23,7 +25,8 @@
             <el-table-column align="center" v-bind="item">
               <template #default="scope">
                 <el-button
-                  size="large"
+                  v-if="isUpdate"
+                  size="small"
                   icon="Edit"
                   type="primary"
                   text
@@ -32,7 +35,8 @@
                   编辑
                 </el-button>
                 <el-button
-                  size="large"
+                  v-if="isDelete"
+                  size="small"
                   icon="Delete"
                   type="danger"
                   text
@@ -46,12 +50,17 @@
           <template v-else-if="item.type === 'custom'">
             <el-table-column align="center" v-bind="item">
               <template #default="scope">
-                <slot :name="item.slotName" v-bind="scope" :prop="item.prop" hName="why"></slot>
+                <slot
+                  :name="item.slotName"
+                  v-bind="scope"
+                  :prop="item.prop"
+                  hName="why"
+                ></slot>
               </template>
             </el-table-column>
           </template>
           <template v-else>
-            <el-table-column align="center" v-bind="item"></el-table-column>
+            <el-table-column align="center" v-bind="item" />
           </template>
         </template>
       </el-table>
@@ -61,7 +70,7 @@
         v-model:current-page="currentPage"
         v-model:page-size="pageSize"
         :page-sizes="[10, 20, 30]"
-        layout=" sizes, prev, pager, next, jumper,total"
+        layout="total, sizes, prev, pager, next, jumper"
         :total="pageTotalCount"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -70,6 +79,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import usePermissions from '@/hooks/usePermissions'
 import userSystemStore from '@/store/main/system/system'
 import { formatUTC } from '@/utils/format'
 import { storeToRefs } from 'pinia'
@@ -87,6 +97,13 @@ interface IProps {
 }
 const emit = defineEmits(['newClick', 'editClick'])
 const props = defineProps<IProps>()
+
+// 0.获取是否有对应的增删改查的权限
+const isCreate = usePermissions(`${props.contentConfig.pageName}:create`)
+const isDelete = usePermissions(`${props.contentConfig.pageName}:delete`)
+const isUpdate = usePermissions(`${props.contentConfig.pageName}:update`)
+const isQuery = usePermissions(`${props.contentConfig.pageName}:query`)
+
 const systemStore = userSystemStore()
 
 const { pageList, pageTotalCount } = storeToRefs(systemStore)
@@ -119,10 +136,21 @@ const handleDeleteBtnClick = (id: number) => {
 const handleEditBtnClick = (rowData: number) => {
   emit('editClick', rowData)
 }
-const hanleNewPageClick = () => {
+const handleNewPageClick = () => {
   emit('newClick')
 }
 
+systemStore.$onAction(({ name, after }) => {
+  after(() => {
+    if (
+      name === 'deletePageListAction' ||
+      name === 'editPageDataAction' ||
+      name === 'newPageDataAction'
+    ) {
+      currentPage.value = 1
+    }
+  })
+})
 fetchPageListData()
 defineExpose({
   fetchPageListData,

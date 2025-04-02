@@ -43,8 +43,7 @@ import { mapMenuListToIds } from '@/utils/map-menus'
 import { ElTree } from 'element-plus'
 
 const { contentRef, handleQueryClick, handleResetClick } = usePageContent()
-const { modalRef, handleNewBtnClick, handleEditBtnClick } = usePageModal(editCallback)
-
+const { modalRef, handleNewBtnClick, handleEditBtnClick } = usePageModal(newCallback, editCallback)
 
 const mainStore = userMainStore()
 const { entireMenus } = storeToRefs(mainStore)
@@ -58,6 +57,11 @@ function handleElTreeCheck(data1: any, data2: any) {
 }
 
 const treeRef = ref<InstanceType<typeof ElTree>>()
+function newCallback() {
+  nextTick(() => {
+    treeRef.value?.setCheckedKeys([])
+  })
+}
 function editCallback(itemData: any) {
   nextTick(() => {
     const menuIds = mapMenuListToIds(itemData.menuList)
