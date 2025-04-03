@@ -13,25 +13,25 @@
         background-color="#001529"
       >
         <template v-for="item in userMenus" :key="item.id + ''">
-          <el-sub-menu :index="item.id + ''" >
+          <el-sub-menu :index="item.id + ''">
             <template #title>
               <el-icon>
                 <component :is="item.icon.split('-icon')[1]" />
               </el-icon>
               <span>{{ item.name }}</span>
             </template>
-            <template v-for="subitem in item.children" :key="subitem.id" >
-              <el-menu-item :index="subitem.id + ''" @click="handleItemClick(subitem)">{{ subitem.name }}</el-menu-item>
+            <template v-for="subitem in item.children" :key="subitem.id">
+              <el-menu-item :index="subitem.id + ''" @click="handleItemClick(subitem)">{{
+                subitem.name
+              }}</el-menu-item>
             </template>
           </el-sub-menu>
         </template>
-
       </el-menu>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-
 import userLoginStore from '@/store/login/login'
 import { mapPathToMenu } from '@/utils/map-menus'
 // import { firstMenu } from '@/utils/map-menus'
@@ -46,23 +46,19 @@ defineProps({
 })
 const loginStore = userLoginStore()
 const router = useRouter()
-const handleItemClick = (item:any) =>{
+const handleItemClick = (item: any) => {
   const url = item.url
   router.push(url)
-  console.log(url)
 }
 
 const route = useRoute()
 // 当前路径匹配菜单的index选择
 const userMenus = loginStore.userMenus
 
-const defaultActive = computed(() =>{
-  const pathMenu = mapPathToMenu(route.path,userMenus)
+const defaultActive = computed(() => {
+  const pathMenu = mapPathToMenu(route.path, userMenus)
   return pathMenu.id + ''
 })
-
-
-
 </script>
 <style lang="less" scoped>
 .main-menu {
