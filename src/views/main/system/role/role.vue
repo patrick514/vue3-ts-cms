@@ -28,7 +28,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, reactive, nextTick } from 'vue'
+import { ref, nextTick } from 'vue'
 import pageSearch from '@/components/page-search/page-search.vue'
 import searchConfig from './config/search.config'
 import pageContent from '@/components/page-content/page-content.vue'

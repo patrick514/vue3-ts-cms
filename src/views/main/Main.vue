@@ -21,9 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { LOGIN_TOKEN } from '@/global/constants'
-import router from '@/router'
-import { localCache } from '@/utils/cache'
+
 import MainMenu from '@/components/main-menu/main-menu.vue'
 import MainHeader from '@/components/main-header/main-header.vue'
 import { ref } from 'vue'

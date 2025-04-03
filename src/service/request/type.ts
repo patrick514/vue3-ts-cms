@@ -1,11 +1,9 @@
 import type {
   AxiosRequestConfig,
   AxiosResponse,
-  AxiosInstance,
   InternalAxiosRequestConfig,
   AxiosRequestHeaders,
 } from 'axios'
-import axios, { AxiosHeaders } from 'axios'
 
 // 扩展 Axios 的拦截器接口
 export interface HYInterceptors<T = AxiosResponse> {

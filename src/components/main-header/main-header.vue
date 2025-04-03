@@ -12,7 +12,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 import headerInfo from './c-cpns/header-info.vue'
 import HeaderCrumb from './c-cpns/header-crumb.vue'
 //自定义事件

@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { CountUp } from 'countup.js'
-import { ref, reactive, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 
 interface IProps {
   amount?: string

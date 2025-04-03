@@ -43,7 +43,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue'
+import { computed } from 'vue'
 import countCard from './c-cpns/count-card/count-card.vue'
 import useAnalysisStore from '@/store/main/analysis/analysis'
 import { storeToRefs } from 'pinia'

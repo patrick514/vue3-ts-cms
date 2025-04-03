@@ -4,7 +4,6 @@ import type { IAccount } from '../../types/login'
 import { localCache } from '@/utils/cache'
 import router from '@/router'
 import { LOGIN_TOKEN } from '@/global/constants'
-import type { RouteRecordRaw } from 'vue-router'
 import { mapMenusToPermissions, mapMenusToRoutes } from '@/utils/map-menus'
 import userMainStore from '../main/main'
 interface ILoginState {

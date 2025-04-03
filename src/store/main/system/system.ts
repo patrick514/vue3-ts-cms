@@ -29,7 +29,7 @@ const userSystemStore = defineStore('system', {
       this.usersList = list
     },
     async deleteUserByIdAction(id: number) {
-      const delteResult = await deleteUserById(id)
+      await deleteUserById(id)
 
       this.postUserListAction({ offset: 0, size: 10 })
 
@@ -38,7 +38,7 @@ const userSystemStore = defineStore('system', {
     },
 
     async newUserDataAction(userInfo: any) {
-      const newResult = await newUserData(userInfo)
+       await newUserData(userInfo)
 
       this.postUserListAction({ offset: 0, size: 10 })
 
@@ -46,7 +46,7 @@ const userSystemStore = defineStore('system', {
       mainStore.fetchEntireDataAction()
     },
     async editUserDataAction(userInfo: any, id: number) {
-      const editResult = await editUserData(userInfo, id)
+      await editUserData(userInfo, id)
       this.postUserListAction({ offset: 0, size: 10 })
 
       const mainStore = userMainStore()
@@ -71,7 +71,7 @@ const userSystemStore = defineStore('system', {
     },
 
     async newPageDataAction(pageName: string, pageInfo: any) {
-      const newResult = await newPageData(pageName, pageInfo)
+      await newPageData(pageName, pageInfo)
 
       this.postPageListAction(pageName, { offset: 0, size: 10 })
 
@@ -79,7 +79,7 @@ const userSystemStore = defineStore('system', {
       mainStore.fetchEntireDataAction()
     },
     async editPageDataAction(pageName: string, pageInfo: any, id: number) {
-      const editResult = await editPageData(pageName, pageInfo, id)
+      await editPageData(pageName, pageInfo, id)
       this.postPageListAction(pageName, { offset: 0, size: 10 })
 
       const mainStore = userMainStore()

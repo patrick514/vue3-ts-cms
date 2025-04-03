@@ -4,7 +4,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue'
+import { computed } from 'vue'
 import baseEchart from './base-echart.vue'
 import type { EChartsOption } from 'echarts'
 import type { IEchartValueType } from '../types'

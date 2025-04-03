@@ -49,7 +49,7 @@
 <script setup lang="ts">
 import userMainStore from '@/store/main/main'
 import userSystemStore from '@/store/main/system/system'
-import { ElMessage } from 'element-plus'
+
 import { storeToRefs } from 'pinia'
 import { ref, reactive } from 'vue'
 const formData = reactive<any>({
@@ -64,7 +64,7 @@ const dialogVisible = ref(false)
 
 const mainStore = userMainStore()
 const { entireRoles, entireDepartments } = storeToRefs(mainStore)
-let isNewRef = ref(true)
+const isNewRef = ref(true)
 const editData = ref()
 const setModalVisible = (isNew: boolean, rowData?: any) => {
   dialogVisible.value = true

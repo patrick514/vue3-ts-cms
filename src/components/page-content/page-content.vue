@@ -83,7 +83,7 @@ import usePermissions from '@/hooks/usePermissions'
 import userSystemStore from '@/store/main/system/system'
 import { formatUTC } from '@/utils/format'
 import { storeToRefs } from 'pinia'
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 interface IProps {
   contentConfig: {
     pageName: string
@@ -102,7 +102,7 @@ const props = defineProps<IProps>()
 const isCreate = usePermissions(`${props.contentConfig.pageName}:create`)
 const isDelete = usePermissions(`${props.contentConfig.pageName}:delete`)
 const isUpdate = usePermissions(`${props.contentConfig.pageName}:update`)
-const isQuery = usePermissions(`${props.contentConfig.pageName}:query`)
+// const isQuery = usePermissions(`${props.contentConfig.pageName}:query`)
 
 const systemStore = userSystemStore()
 

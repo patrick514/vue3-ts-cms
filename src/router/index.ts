@@ -1,8 +1,7 @@
 import { LOGIN_TOKEN } from '@/global/constants'
 import { localCache } from '@/utils/cache'
 import { firstMenu } from '@/utils/map-menus'
-import { fi } from 'element-plus/es/locales.mjs'
-import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory,  } from 'vue-router'
 
 const router = createRouter({
   history: createWebHashHistory(),

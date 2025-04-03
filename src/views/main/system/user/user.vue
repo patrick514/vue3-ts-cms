@@ -6,7 +6,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 import userModal from './c-cpns/user-modal.vue'
 import userSearch from './c-cpns/user-search.vue'
 import userContent from './c-cpns/user-content.vue'

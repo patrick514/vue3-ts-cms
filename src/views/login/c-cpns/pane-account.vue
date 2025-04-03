@@ -21,7 +21,7 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import type { FormRules, ElForm } from 'element-plus'
-import { accountLoginRequest } from '@/service/login/login'
+
 import { ElMessage } from 'element-plus'
 import userLoginStore from '@/store/login/login'
 import type { IAccount } from '@/types/login'

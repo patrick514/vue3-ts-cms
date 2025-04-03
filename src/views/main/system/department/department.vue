@@ -25,7 +25,7 @@
 <script setup lang="ts" name="department">
 import pageSearch from '@/components/page-search/page-search.vue'
 import pageContent from '@/components/page-content/page-content.vue'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import pageModal from '@/components/page-modal/page-modal.vue'
 
 import searchConfig from './config/search.config'

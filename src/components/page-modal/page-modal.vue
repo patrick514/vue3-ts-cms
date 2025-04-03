@@ -50,9 +50,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import userMainStore from '@/store/main/main'
+// import userMainStore from '@/store/main/main'
 import userSystemStore from '@/store/main/system/system'
-import { storeToRefs } from 'pinia'
+// import { storeToRefs } from 'pinia'
 import { ref, reactive } from 'vue'
 interface IModalProps {
   modalConfig: {
@@ -75,9 +75,9 @@ for (const item of props.modalConfig.formItems) {
 const formData = reactive<any>(initialData)
 const dialogVisible = ref(false)
 
-const mainStore = userMainStore()
-const { entireRoles, entireDepartments } = storeToRefs(mainStore)
-let isNewRef = ref(true)
+// const mainStore = userMainStore()
+// const { entireRoles, entireDepartments } = storeToRefs(mainStore)
+const isNewRef = ref(true)
 const editData = ref()
 const setModalVisible = (isNew: boolean, rowData?: any) => {
   dialogVisible.value = true

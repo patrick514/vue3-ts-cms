@@ -48,7 +48,6 @@ import { LOGIN_TOKEN } from '@/global/constants'
 import router from '@/router'
 import userLoginStore from '@/store/login/login'
 import { localCache } from '@/utils/cache'
-import { ref, reactive } from 'vue'
 
 const loginStore = userLoginStore()
 const userName = loginStore.userInfo.name
